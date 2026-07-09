@@ -1,17 +1,68 @@
-# TechStock Pro — Prueba de entrega
-Proyecto estático de la entrega — interfaz de la aplicación "TechStock Pro".
+# TechStock Pro — Front-end (Entrega)
 
-Descripción:
-- Este repositorio contiene la versión estática del front-end del proyecto "TechStock Pro".
-- La página principal está en `index.html` en la raíz del repositorio (publicada vía GitHub Pages).
+Proyecto estático: interfaz para la gestión de insumos y stock, publicada con GitHub Pages.
 
-Live demo:
+Live demo
 
 https://nikohgb.github.io/techstock-pro-sumativa-3-front-end/
 
-Resumen rápido:
-- TechStock Pro es una interfaz para gestionar "insumos" (añadir, editar, eliminar, controlar stock y precio).
-- La versión publicada usa solo HTML/CSS/JS y almacena los datos en `localStorage` del navegador (no requiere backend).
+Descripción general
+
+TechStock Pro es una interfaz ligera para administrar insumos de una bodega tecnológica. Permite añadir, editar y eliminar insumos, controlar stock y precios, y ver estadísticas sencillas en la cabecera. La versión actual es completamente estática y guarda datos en el navegador usando `localStorage`.
+
+Características principales
+
+- Añadir insumos: nombre, descripción, categoría, stock y precio.
+- Editar insumos existentes directamente desde la interfaz.
+- Eliminar insumos con confirmación.
+- Conteo dinámico de insumos y total de stock mostrado en la cabecera.
+- Persistencia local: todos los cambios se guardan en `localStorage` del navegador.
+- Restablecer datos de ejemplo desde la UI.
+
+Limitaciones
+
+- Los datos se guardan solo en el navegador (no sincronizados entre dispositivos).
+- Para compartir datos entre usuarios es necesario conectar la aplicación a un backend o usar un servicio (Firebase, etc.).
+
+Cómo usar (rápido)
+
+1. Abre la demo en: https://nikohgb.github.io/techstock-pro-sumativa-3-front-end/
+2. En el formulario izquierdo, completa los campos y pulsa "Agregar insumo".
+3. Los insumos aparecen en la lista a la derecha; usa "Editar" o "Eliminar" para modificarlos.
+4. El conteo de insumos y el total de stock se actualizan automáticamente.
+
+Ver el proyecto localmente
+
+```powershell
+cd "C:\Users\elsar\Downloads\front end prueba 3 nicolas"
+# Abrir directamente el archivo HTML en el navegador o usar un servidor estático
+start index.html
+# (Opcional) si usas Node.js + http-server:
+# npm install -g http-server
+# http-server -c-1 .
+```
+
+Despliegue
+
+- El sitio está publicado en GitHub Pages desde la rama `main` (raíz del repo). Si haces cambios, haz commit y `git push` para que se despliegue automáticamente.
+
+Tecnologías
+
+- HTML, CSS, JavaScript (vanilla)
+- Bootstrap 5 (CDN)
+- GitHub Pages (hosting)
+
+Siguientes mejoras sugeridas
+
+- Conectar a un backend (Node/Firebase) para persistencia multiusuario.
+- Añadir búsqueda y filtros para la lista de insumos.
+- Exportar/importar CSV para respaldo de datos.
+
+Autor
+
+`nikohgb` — nicolas.alvares65@inacapmail.cl
+
+Si quieres, actualizo también el apartado *About* del repositorio (descripción y URL pública). Dime si lo hago ahora.
 
 Estructura principal:
 ```
