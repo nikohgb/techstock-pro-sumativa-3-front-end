@@ -108,17 +108,13 @@ Comandos útiles (local):
 
 ```powershell
 cd "C:\Users\elsar\Downloads\front end prueba 3 nicolas"
-git status
-git pull
-git add .
-git commit -m "Update README and Pages info"
-git push
-```
+# TechStock Pro — Demo
 
-Si quieres, puedo:
+Interfaz estática para gestionar insumos (añadir/editar/eliminar) y ver stock.
 
+Live demo: https://nikohgb.github.io/techstock-pro-sumativa-3-front-end/
+
+---
+
+Si quieres más detalles, avísame y amplío el `README` nuevamente.
 - Actualizar el apartado *About* del repositorio para mostrar la descripción y la URL pública.
-- Añadir capturas o un GIF de uso al `README`.
-- Conectar la app a un backend para guardar insumos en la nube.
-
-Dime qué prefieres y lo hago ahora.
