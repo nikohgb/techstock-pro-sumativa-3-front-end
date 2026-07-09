@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Preview — TechStock Pro (prueba)</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="src/index.css">
+  </head>
+  <body>
+    <div class="min-vh-100 d-flex flex-column">
+      <header class="ts-hero">
+        <div class="container">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <div class="d-flex align-items-center gap-3">
+              <div class="ts-icon-chip"><i class="bi bi-boxes"></i></div>
+              <div>
+                <h1 class="h3 mb-0">TechStock Pro</h1>
+                <p class="mb-0 small opacity-75">Gestión de Bodega Tecnológica</p>
+              </div>
+            </div>
+            <div class="d-flex gap-2 flex-wrap">
+              <span class="badge-yellow"><i class="bi bi-box-seam me-1"></i>6 insumos</span>
+              <span class="badge-yellow"><i class="bi bi-graph-up me-1"></i>120 unidades en stock</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="container flex-grow-1 py-4">
+        <div class="row g-4">
+          <div class="col-12 col-lg-4">
+            <div class="ts-form-card">
+              <h5 class="mb-3"><i class="bi bi-plus-circle me-2"></i>Nuevo insumo</h5>
+              <form>
+                <div class="mb-3">
+                  <label class="form-label fw-semibold">Nombre</label>
+                  <input type="text" class="form-control" placeholder="Ej: Mouse inalámbrico Logitech">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label fw-semibold">Descripción</label>
+                  <textarea class="form-control" rows="3" placeholder="Detalle breve del insumo"></textarea>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label fw-semibold">Categoría</label>
+                  <select class="form-select"><option>Periféricos</option></select>
+                </div>
+                <div class="row g-2 mb-3">
+                  <div class="col-6">
+                    <label class="form-label fw-semibold">Stock</label>
+                    <input type="number" class="form-control" placeholder="0">
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label fw-semibold">Precio ($)</label>
+                    <input type="number" class="form-control" placeholder="0">
+                  </div>
+                </div>
+                <div class="d-flex gap-2 flex-wrap">
+                  <button class="btn-ts-primary">Agregar insumo</button>
+                  <button type="button" class="btn-ts-outline">Cancelar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-8">
+            <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+              <h2 class="h5 ts-section-title mb-0">Inventario actual</h2>
+              <button class="btn-ts-outline btn-sm"><i class="bi bi-arrow-repeat me-1"></i>Restablecer desde API</button>
+            </div>
+
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <div class="ts-card p-3">
+                  <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h3 class="card-title h6 mb-0">Mouse inalámbrico</h3>
+                    <span class="ts-stock-badge"><i class="bi bi-boxes me-1"></i>24</span>
+                  </div>
+                  <p class="text-muted small mb-2">Mouse ergonómico, conexión Bluetooth, 2.4GHz.</p>
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge bg-light text-dark border">Periféricos</span>
+                    <span class="ts-price">$12.900</span>
+                  </div>
+                  <div class="d-flex gap-2">
+                    <button class="btn-ts-warning btn-sm flex-grow-1"><i class="bi bi-pencil-square me-1"></i>Editar</button>
+                    <button class="btn-ts-danger btn-sm flex-grow-1"><i class="bi bi-trash3 me-1"></i>Eliminar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </main>
+
+      <footer class="text-center py-3 small text-muted border-top">TechStock Pro © 2026 — Proyecto académico INACAP Maipú</footer>
+    </div>
+  </body>
+</html>
