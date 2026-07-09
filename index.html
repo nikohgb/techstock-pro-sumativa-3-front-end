@@ -21,8 +21,8 @@
               </div>
             </div>
             <div class="d-flex gap-2 flex-wrap">
-              <span class="badge-yellow"><i class="bi bi-box-seam me-1"></i>6 insumos</span>
-              <span class="badge-yellow"><i class="bi bi-graph-up me-1"></i>120 unidades en stock</span>
+              <span id="insumos-count" class="badge-yellow"><i class="bi bi-box-seam me-1"></i>0 insumos</span>
+              <span id="total-stock" class="badge-yellow"><i class="bi bi-graph-up me-1"></i>0 unidades en stock</span>
             </div>
           </div>
         </div>
@@ -33,32 +33,32 @@
           <div class="col-12 col-lg-4">
             <div class="ts-form-card">
               <h5 class="mb-3"><i class="bi bi-plus-circle me-2"></i>Nuevo insumo</h5>
-              <form>
+              <form id="insumo-form">
                 <div class="mb-3">
                   <label class="form-label fw-semibold">Nombre</label>
-                  <input type="text" class="form-control" placeholder="Ej: Mouse inalámbrico Logitech">
+                  <input id="nameInput" type="text" class="form-control" placeholder="Ej: Mouse inalámbrico Logitech" required>
                 </div>
                 <div class="mb-3">
                   <label class="form-label fw-semibold">Descripción</label>
-                  <textarea class="form-control" rows="3" placeholder="Detalle breve del insumo"></textarea>
+                  <textarea id="descInput" class="form-control" rows="3" placeholder="Detalle breve del insumo"></textarea>
                 </div>
                 <div class="mb-3">
                   <label class="form-label fw-semibold">Categoría</label>
-                  <select class="form-select"><option>Periféricos</option></select>
+                  <select id="categorySelect" class="form-select"><option>Periféricos</option><option>Accesorios</option><option>Componentes</option></select>
                 </div>
                 <div class="row g-2 mb-3">
                   <div class="col-6">
                     <label class="form-label fw-semibold">Stock</label>
-                    <input type="number" class="form-control" placeholder="0">
+                    <input id="stockInput" type="number" class="form-control" placeholder="0" min="0" value="0">
                   </div>
                   <div class="col-6">
                     <label class="form-label fw-semibold">Precio ($)</label>
-                    <input type="number" class="form-control" placeholder="0">
+                    <input id="priceInput" type="number" class="form-control" placeholder="0" min="0" value="0">
                   </div>
                 </div>
                 <div class="d-flex gap-2 flex-wrap">
-                  <button class="btn-ts-primary">Agregar insumo</button>
-                  <button type="button" class="btn-ts-outline">Cancelar</button>
+                  <button id="submitButton" class="btn-ts-primary">Agregar insumo</button>
+                  <button id="cancelButton" type="button" class="btn-ts-outline">Cancelar</button>
                 </div>
               </form>
             </div>
@@ -70,24 +70,8 @@
               <button class="btn-ts-outline btn-sm"><i class="bi bi-arrow-repeat me-1"></i>Restablecer desde API</button>
             </div>
 
-            <div class="row g-3">
-              <div class="col-12 col-md-6">
-                <div class="ts-card p-3">
-                  <div class="d-flex justify-content-between align-items-start mb-2">
-                    <h3 class="card-title h6 mb-0">Mouse inalámbrico</h3>
-                    <span class="ts-stock-badge"><i class="bi bi-boxes me-1"></i>24</span>
-                  </div>
-                  <p class="text-muted small mb-2">Mouse ergonómico, conexión Bluetooth, 2.4GHz.</p>
-                  <div class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="badge bg-light text-dark border">Periféricos</span>
-                    <span class="ts-price">$12.900</span>
-                  </div>
-                  <div class="d-flex gap-2">
-                    <button class="btn-ts-warning btn-sm flex-grow-1"><i class="bi bi-pencil-square me-1"></i>Editar</button>
-                    <button class="btn-ts-danger btn-sm flex-grow-1"><i class="bi bi-trash3 me-1"></i>Eliminar</button>
-                  </div>
-                </div>
-              </div>
+            <div id="insumos-list" class="row g-3">
+              <!-- Lista de insumos generada por JS -->
             </div>
 
           </div>
@@ -96,5 +80,130 @@
 
       <footer class="text-center py-3 small text-muted border-top">TechStock Pro © 2026 — Proyecto académico INACAP Maipú</footer>
     </div>
+
+    <script>
+      // Simple insumos manager using localStorage
+      const STORAGE_KEY = 'techstock_insumos_v1';
+      const sampleData = [
+        { id: 'i1', name: 'Mouse inalámbrico', desc: 'Mouse ergonómico, conexión Bluetooth, 2.4GHz.', category: 'Periféricos', stock: 24, price: 12900 },
+      ];
+
+      const $ = selector => document.querySelector(selector);
+      const $$ = selector => Array.from(document.querySelectorAll(selector));
+
+      let insumos = [];
+      let editingId = null;
+
+      function load() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        insumos = raw ? JSON.parse(raw) : sampleData.slice();
+        renderList();
+      }
+
+      function save() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(insumos));
+      }
+
+      function formatPrice(v){ return '$' + Number(v).toLocaleString('es'); }
+
+      function renderList(){
+        const container = $('#insumos-list');
+        container.innerHTML = '';
+        insumos.forEach(item => {
+          const col = document.createElement('div'); col.className = 'col-12 col-md-6';
+          const card = document.createElement('div'); card.className = 'ts-card p-3';
+          card.innerHTML = `
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <h3 class="card-title h6 mb-0">${escapeHtml(item.name)}</h3>
+              <span class="ts-stock-badge"><i class="bi bi-boxes me-1"></i>${item.stock}</span>
+            </div>
+            <p class="text-muted small mb-2">${escapeHtml(item.desc || '')}</p>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="badge bg-light text-dark border">${escapeHtml(item.category || '')}</span>
+              <span class="ts-price">${formatPrice(item.price || 0)}</span>
+            </div>
+            <div class="d-flex gap-2">
+              <button data-id="${item.id}" class="btn-ts-warning btn-sm flex-grow-1 btn-edit"><i class="bi bi-pencil-square me-1"></i>Editar</button>
+              <button data-id="${item.id}" class="btn-ts-danger btn-sm flex-grow-1 btn-delete"><i class="bi bi-trash3 me-1"></i>Eliminar</button>
+            </div>
+          `;
+          col.appendChild(card);
+          container.appendChild(col);
+        });
+
+        // update counts
+        const count = insumos.length;
+        const totalStock = insumos.reduce((s,i)=>s+Number(i.stock||0),0);
+        $('#insumos-count').textContent = `${count} insumos`;
+        $('#total-stock').textContent = `${totalStock} unidades en stock`;
+
+        // attach handlers
+        $$('.btn-delete').forEach(btn => btn.addEventListener('click', (e)=>{
+          const id = e.currentTarget.dataset.id;
+          if(confirm('Eliminar este insumo?')){
+            insumos = insumos.filter(i=>i.id!==id);
+            save(); renderList();
+          }
+        }));
+
+        $$('.btn-edit').forEach(btn => btn.addEventListener('click', (e)=>{
+          const id = e.currentTarget.dataset.id;
+          const item = insumos.find(i=>i.id===id);
+          if(!item) return;
+          editingId = id;
+          $('#nameInput').value = item.name;
+          $('#descInput').value = item.desc;
+          $('#categorySelect').value = item.category;
+          $('#stockInput').value = item.stock;
+          $('#priceInput').value = item.price;
+          $('#submitButton').textContent = 'Actualizar insumo';
+        }));
+      }
+
+      function escapeHtml(str){ return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+      // form handling
+      $('#insumo-form').addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const name = $('#nameInput').value.trim();
+        if(!name) return alert('El nombre es requerido');
+        const desc = $('#descInput').value.trim();
+        const category = $('#categorySelect').value;
+        const stock = Number($('#stockInput').value) || 0;
+        const price = Number($('#priceInput').value) || 0;
+
+        if(editingId){
+          const item = insumos.find(i=>i.id===editingId);
+          if(item){ item.name=name; item.desc=desc; item.category=category; item.stock=stock; item.price=price; }
+          editingId = null;
+          $('#submitButton').textContent = 'Agregar insumo';
+        } else {
+          const id = 'i' + Date.now();
+          insumos.unshift({ id, name, desc, category, stock, price });
+        }
+        save(); renderList();
+        $('#insumo-form').reset();
+        $('#stockInput').value = 0; $('#priceInput').value = 0;
+      });
+
+      $('#cancelButton').addEventListener('click', ()=>{
+        editingId = null; $('#submitButton').textContent = 'Agregar insumo'; $('#insumo-form').reset();
+        $('#stockInput').value = 0; $('#priceInput').value = 0;
+      });
+
+      // reset from API (sample behaviour)
+      $$('.btn-ts-outline').forEach(b=>{
+        if(b.textContent.includes('Restablecer')){
+          b.addEventListener('click', ()=>{
+            if(confirm('Restablecer datos de ejemplo? Esto sobreescribirá los insumos guardados localmente.')){
+              insumos = sampleData.slice(); save(); renderList();
+            }
+          });
+        }
+      });
+
+      // initial load
+      load();
+    </script>
   </body>
 </html>
